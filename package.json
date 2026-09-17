@@ -1,0 +1,18 @@
+{
+  "name": "yao-site",
+  "version": "0.1.0",
+  "private": true,
+  "description": "曜 — 个人品牌网站（一期：欢迎页 · 纯静态）",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace @yao/web",
+    "build": "npm run build --workspace @yao/web",
+    "lint": "npm run lint --workspace @yao/web",
+    "preview": "npm run preview --workspace @yao/web"
+  },
+  "engines": {
+    "node": ">=18.18.0"
+  }
+}
