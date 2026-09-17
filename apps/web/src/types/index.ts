@@ -6,7 +6,7 @@ export interface Platform {
   id: string;
   name: string;
   label: string;
-  url: string;
+  url?: string;
   icon: PlatformIconType;
   color: AccentColor;
 }

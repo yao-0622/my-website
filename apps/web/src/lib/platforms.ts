@@ -9,7 +9,7 @@ export const platforms: Platform[] = [
     id: "wechat-video",
     name: "微信视频号",
     label: "搜索『曜-123』",
-    url: "https://channels.weixin.qq.com/user/placeholder", // ← 待替换
+    // 无直达链接，置灰展示（不可点击）
     icon: "video",
     color: "cool",
   },

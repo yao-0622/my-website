@@ -54,9 +54,50 @@ interface PlatformIconProps {
 
 /**
  * 单个平台图标卡片：进入视口依次弹入，hover 缩放 + 外发光 + 边框变亮
+ * 无链接的平台（url 缺省）置灰展示：降低透明度、移除悬浮动效、不可点击
  */
 export function PlatformIcon({ platform, index }: PlatformIconProps) {
   const accent = ACCENT[platform.color];
+
+  const className =
+    "group flex min-h-[10rem] flex-col items-center justify-center gap-3 rounded-2xl border bg-bg-secondary/60 px-4 py-7 backdrop-blur-sm";
+
+  const content = (
+    <>
+      <span
+        style={{ color: accent.fg }}
+        className="flex h-12 w-12 items-center justify-center [&>svg]:h-9 [&>svg]:w-9"
+        aria-hidden
+      >
+        <Glyph icon={platform.icon} />
+      </span>
+      <span className="text-sm font-medium text-text-primary md:text-base">
+        {platform.name}
+      </span>
+      <span className="text-xs text-text-secondary">{platform.label}</span>
+    </>
+  );
+
+  if (!platform.url) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 24, scale: 0.92 }}
+        whileInView={{ opacity: 0.45, y: 0, scale: 1 }}
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{
+          type: "spring",
+          stiffness: 260,
+          damping: 20,
+          delay: index * 0.1,
+        }}
+        aria-disabled="true"
+        style={{ borderColor: "rgba(255,255,255,0.06)" }}
+        className={className}
+      >
+        {content}
+      </motion.div>
+    );
+  }
 
   return (
     <motion.a
@@ -78,19 +119,9 @@ export function PlatformIcon({ platform, index }: PlatformIconProps) {
         borderColor: accent.fg,
       }}
       style={{ borderColor: "rgba(255,255,255,0.06)" }}
-      className="group flex min-h-[10rem] flex-col items-center justify-center gap-3 rounded-2xl border bg-bg-secondary/60 px-4 py-7 backdrop-blur-sm"
+      className={className}
     >
-      <span
-        style={{ color: accent.fg }}
-        className="flex h-12 w-12 items-center justify-center [&>svg]:h-9 [&>svg]:w-9"
-        aria-hidden
-      >
-        <Glyph icon={platform.icon} />
-      </span>
-      <span className="text-sm font-medium text-text-primary md:text-base">
-        {platform.name}
-      </span>
-      <span className="text-xs text-text-secondary">{platform.label}</span>
+      {content}
     </motion.a>
   );
 }
